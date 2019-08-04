@@ -16,6 +16,9 @@ function animateScene( forward ) {
 var colors = ['red','blue'];
 
 var y_debt_rev,y_ratio_rev,y_rate_rev,y_pred_rev,x_scale,y_scale,y_alt,data,alt_data,y_left;
+var x_ax_scale = {"1" : d3.scaleBand().domain(["Debt","Income","Ratio"]).range([0,chart_dimensions.width]),
+                  "2" : d3.scaleBand().domain(["Inflation","Interest","Effective Interest"]).range([0,chart_dimensions.width])};
+console.log(x_ax_scale);
 
 function calculateScales() {
     x1scale.range([0, chart_dimensions.width])
@@ -41,6 +44,7 @@ function calculateScales() {
     y_pred_rev.range([chart_dimensions.height,0]);
     x_scale = {"1" : x1scale, "2" : x2scale, "3" : x3scale};
     y_scale = {"1" : y_debt, "2" : y_rate, "3" : y_pred_debt};
+    x_ax_scale["3"] = x3scale;
     y_alt = {"1" : y_ratio, "2" : y_rate};
     data = {"1" : [debt_data,income_data], "2" : [inflation_data,interest_data]};
     alt_data = {"1" : ratio_data, "2" : eff_interest_data};
@@ -184,7 +188,7 @@ const text = {"1" : "Factor",
              };
 
 function createBottomAxis(scene) {
-    const xAxis = d3.axisBottom().scale(x_scale[scene])
+    const xAxis = d3.axisBottom().scale(x_ax_scale[scene])
         .tickSize(10);
 
     d3.select(".chart").append("g")
@@ -193,12 +197,11 @@ function createBottomAxis(scene) {
         .attr("transform", "translate(" + margin.left + "," + (margin.top + chart_dimensions.height) + ")")
         .call(xAxis)
         .selectAll("text")
-        .attr("x", -35)
-        .attr("y", 0)
+        .attr("x", 0)
+        .attr("y", 20)
         .attr("dx", 0)
         .attr("dy", "0.35em")
-        .attr("transform", "rotate(-90)")
-        .style("text-anchor", "start");
+        .style("text-anchor", "middle");
 
     d3.select(".chart").append("text")
         .attr("id", "xBottomAxisLabel")
@@ -210,7 +213,7 @@ function createBottomAxis(scene) {
 }
 
 function showBottomAxis(scene) {
-    const xAxis = d3.axisBottom().scale(x_scale[scene])
+    const xAxis = d3.axisBottom().scale(x_ax_scale[scene])
         .tickSize(10);
     d3.select("#xAxisG")
         .transition()
@@ -218,12 +221,11 @@ function showBottomAxis(scene) {
         .attr("transform", "translate(" + margin.left + "," + (margin.top + chart_dimensions.height) + ")")
         .call(xAxis)
         .selectAll("text")
-        .attr("x", -35)
-        .attr("y", 0)
+        .attr("x", 0)
+        .attr("y", 20)
         .attr("dx", 0)
         .attr("dy", "0.35em")
-        .attr("transform", "rotate(-90)")
-        .style("text-anchor", "start");
+        .style("text-anchor", "middle");
     d3.select("#xBottomAxisLabel")
         .transition()
         .duration(1000)
@@ -390,9 +392,10 @@ function createScatterplot() {
         .enter()
         .append("g")
         .attr("id", "c")
+        .attr("transform", "translate(50,0)")
         .append("circle")
         .attr("class", "circle-fed")
-        .attr("cx", function(d,i) { return margin.left + x3scale(d) + 25*(i+1);} )
+        .attr("cx", function(d,i) { return margin.left + x3scale(d);} )
         .attr("cy", chart_dimensions.height)
         .attr("r", 0)
         .attr("fill", "red")
@@ -405,7 +408,7 @@ function createScatterplot() {
     d3.selectAll("#c")
         .append("circle")
         .attr("class", "circle-h")
-        .attr("cx", function(d,i) { return margin.left + x3scale(d) + 25*(i+1);} )
+        .attr("cx", function(d,i) { return margin.left + x3scale(d);} )
         .attr("cy", chart_dimensions.height)
         .attr("r", 0)
         .attr("fill", "blue")
