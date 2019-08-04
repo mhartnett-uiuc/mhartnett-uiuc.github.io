@@ -1,1 +1,116 @@
-Hello World
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CS 498 DV Final Project - Michael Hartnett</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
+    <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="chart.css"/>
+    <script type="text/javascript" src="params.js"></script>
+    <script type="text/javascript" src="annotations.js"></script>
+    <script type="text/javascript" src="animations.js"></script>
+    <script type="text/javascript" src="states.js"></script>
+    <script type="text/javascript" src="loaddata.js"></script>
+</head>
+
+<body onload="init()">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-6" align="left">
+            <h3>Federal Debt vs Household Debt in the U.S.</h3>
+        </div>
+        <div class="col-xs-4" align="right"><p></p><p><a type="button" class="btn btn-default" href="about.html" role="button" target="_blank">About</a></p>
+        </div>
+        <div class="col-xs-2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <p></p>
+            <button type="button" class="btn btn-default disabled toggle-enabled-1" onclick="frameBack()">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+            <button type="button" class="btn btn-default active toggle-active-1" onclick="jumpToFrame(0)">0</button>
+            <button type="button" class="btn btn-default toggle-active-1 toggle-active-2" onclick="jumpToFrame(1)">1</button>
+            <button type="button" class="btn btn-default toggle-active-2 toggle-active-3" onclick="jumpToFrame(2)">2</button>
+            <button type="button" class="btn btn-default toggle-active-3 toggle-active-4" onclick="jumpToFrame(3)">3</button>
+            <button type="button" class="btn btn-default toggle-active-4 toggle-enabled-4" onclick="frameForward()">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
+        </div>
+        <div class="col-xs-7">
+            <div class="toggle-visibility-1"><h1 align="center">Introduction</h1></div>
+            <div class="invisible toggle-visibility-1 toggle-visibility-2"><h1 align="center">Federal and Household Debt in 2016</h1></div>
+            <div class="invisible toggle-visibility-2 toggle-visibility-3" align="center"><h1>Effective Interest Rates</h1></div>
+            <div class="invisible toggle-visibility-3 toggle-visibility-4" align="center"><h1>The Debt Future</h1></div>
+        </div>
+        <div class="col-xs-2">
+        </div>
+
+    </div>
+    <div class="row narrative">
+        <div class="col-xs-3">
+            <div id="n-00" class="visible toggle-visibility-1">
+                <h4>To Begin</h4>
+                Click the above right arrow button to navigate to the next scene in our story.
+            </div>
+            <div id="n-01" class="invisible toggle-visibility-1 toggle-visibility-2">
+                <h3>Federal vs Household Debt</h3>
+                <p>The graph on the right shows statistics for federal and household debt in 2016.</p>
+                <p>The federal debt to GDP ratio vastly outpaces household debt to disposable income.</p>
+            </div>
+            <div id="n-02" class="invisible toggle-visibility-2 toggle-visibility-3">
+                <h3>Effective Interest Rates</h3>
+                <p>The federal government pays an effective negative interest rate due to inflation,
+                   while the average household suffers from the same economic factor. This is one
+                   reason the Federal Reserve sets the target inflation rate at 2%.
+                </p>
+            </div>
+            <div id="n-03" class="invisible toggle-visibility-3 toggle-visibility-4">
+                <h3>The Future Debt Burden</h3>
+                <p>Data has not yet been published in the data source (FRED St. Louis) for household debt post-2016,
+                   but we can predict the levels will rise as shown in the chart.
+                </p>
+                <p>We now proceed to the interactive portion of the narrative, where you will be able
+                    to explore further into the future of U.S. federal and household debt.</p>
+                <h4>Here's what you can do:</h4>
+                <ul>
+                    <li>Hover over points to display the predicted debt:income ratio</li>
+                </ul>
+                <div>
+                    <table class="filter-category invisible toggle-visibility-4" align="right">
+                        <thead>
+                        <tr>
+                            <td colspan="3" align="center">Type Legend</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-7">
+            <div id="loading-message">
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+            <div id="chart-div" class="invisible" style="position: relative; width: 900px; height: 500px;">
+                <svg id="chart-id" class="chart" style="position: absolute; z-index: 1; top: 0; left: 0; opacity: 0">
+                </svg>
+            </div>
+        </div>
+        <div class="col-xs-2"></div>
+    </div>
+</div>
+</body>
+</html>

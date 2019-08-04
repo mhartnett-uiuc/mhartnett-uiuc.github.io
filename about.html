@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+<body>
+<div style="width: 500px">
+  <h1 align="left">About the Visualization</h1>
+
+  CS 498 Data Visualization
+  Assignment 7-3-3
+  Michael Hartnett
+
+  <h2>Message</h2>
+  The narrative visualization is intended to direct the viewer to the context in which two different types of debt exist.
+  The conclusion drawn is up to them.
+  
+  <h2>Narrative Structure</h2>
+  This narrative visualization follows a "martini glass" structure with 2 presentation
+  scenes followed by a user-driven scene.
+
+  <h2>Visual Structure</h2>
+  The first two scenes have identical layout using bar graphs. The exploration scene consists of a scatterplot in the same position
+  to minimize disorientation.
+
+  <h2>Scenes</h2>
+  Flow through the scenes can be linear or user-directed through the page buttons.
+  The linear structure is designed to elicit shock (scene 1), skepticism (scene 2), and concern (scene 3).
+
+  <h2>Annotations</h2>
+  <p>Annotations use the same template and are static during the scene, but are reloaded for each individual scene.</p>
+  
+  <h2>Parameters</h2>
+  The common parameters for all scenes are as follows:
+  <ul>
+    <li><b>Scene number</b> - scenes are rendered in the same window, and scene number is a parameter
+    that drives the presentation.</li>
+    <li><b>Scene title, sidebar text, chart titles</b>- these elements are parameters that change based on the scene</li>
+  </ul>
+
+  Parameters that are specific to the author-driven portion (scenes 0-3) are: 
+  <ul>
+    <li><b>Annotation aiming point, position, text</b> - annotations are parameterized with an aiming point (using 
+    data coordinates rather than screen coordinates), a text offset and the content of the annotation</li>
+    <li><b>Chart type and axis, date range</b> - depending on the scene and point being made, the visualization
+      will show or hide one or another of the two main axes (citations, papers) and limit the date range to draw
+      reader focus on a certain period of time.</li>
+  </ul>
+
+  <h2>Triggers</h2>
+  <p>The first trigger is the completion of the HTML page load, which invokes the routines to initialize the visualization.</p>
+  <p>This is followed by the CSV data load, during which a "Loading data ... " message is presented. When the CSV data
+    load finishes a trigger causes the first scene to be rendered.</p>
+
+  <p>The user advances through the presentation by clicking the forward- and backward buttons. This triggers a change
+  in state variable (scene/frame) which updates the page buttons (active/inactive/selected) as well as the
+    common parameters described above: scene title, chart title, sidebar text, chart, axis, date range.
+  </p>
+  <p>On the reader-driven chart, mousing over a point on the scatterplot displays a tooltip with the debt:income ratio.</p>
+
+</div>
+</body>
+</html>
